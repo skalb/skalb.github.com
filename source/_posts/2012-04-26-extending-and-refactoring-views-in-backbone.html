@@ -1,0 +1,258 @@
+---
+layout: post
+title: Extending and refactoring views in Backbone.js
+tags:
+- Backbone
+- CoffeeScript
+- EJS
+- Handlebars
+- JavaScript
+- Programming
+- Rails
+- Ruby
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  description: Tutorial on how to extend views in Backbone.js
+  title: Extending and refactoring views in Backbone
+  robotsmeta: index,follow
+  _avia_elements_avia_options_sentence: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
+  _avia_elements_theme_compatibility_mode: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
+  keywords: Web, Tutorial, HTML, JavaScript, Templates, Backbone, CoffeeScript, Handlebars,
+    Rails, Ruby
+  _facebookcount-cache: '0'
+  _twittercount-cache: '2'
+  _syntaxhighlighter_encoded: '1'
+---
+In a <a href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/" >previous post</a>, I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn't share any code. I think part of this was that I originally scaffolded the entire app and worked backwards.
+
+<!--more-->
+
+For example, here's Project vs Feature Index Templates:
+[html]
+&lt;h1&gt;Listing projects&lt;/h1&gt;
+
+&lt;table id=&quot;projects-table&quot;&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Name&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br/&gt;
+[/html]
+
+vs.
+
+[html]
+&lt;h1&gt;Listing features&lt;/h1&gt;
+
+&lt;table id=&quot;features-table&quot;&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Name&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br/&gt;
+[/html]
+This is easily refactored to:
+[html]
+&lt;h1&gt;Listing &lt;%= type %&gt;&lt;/h1&gt;
+
+&lt;table id=&quot;items-table&quot;&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Name&lt;/th&gt;
+    &lt;th&gt;&lt;/th&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br/&gt;
+[/html]
+Similarly, the New View changed from:
+[html]
+&lt;h1&gt;New project&lt;/h1&gt;
+
+&lt;form id=&quot;new-project&quot; name=&quot;project&quot;&gt;
+  &lt;div class=&quot;field&quot;&gt;
+    &lt;label for=&quot;name&quot;&gt; name:&lt;/label&gt;
+    &lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot; value=&quot;&lt;%= name %&gt;&quot; &gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;actions&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Create Project&quot; /&gt;
+  &lt;/div&gt;
+
+&lt;/form&gt;
+[/html]
+to
+[html]
+&lt;h1&gt;New &lt;%= type %&gt;&lt;/h1&gt;
+
+&lt;form id=&quot;new-item&quot;&gt;
+  &lt;div class=&quot;field&quot;&gt;
+    &lt;label for=&quot;name&quot;&gt; name:&lt;/label&gt;
+    &lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot; value=&quot;&lt;%= name %&gt;&quot; &gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;actions&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Create &lt;%= type %&gt;&quot; /&gt;
+  &lt;/div&gt;
+
+&lt;/form&gt;
+[/html]
+
+Great, that was easy and now I just reduced my total Templates. To share functionality between the Views I needed to create a base View class:
+
+[coffee]
+Trackbone.Views ||= {}
+
+class Trackbone.Views.IndexView extends Backbone.View
+  template: JST[&quot;backbone/templates/index&quot;]
+
+  initialize: () -&gt;
+    @options.items.bind('reset', @addAll)
+    @options.items.bind('sync', @addAll)
+
+  addAll: () =&gt;
+    # This shouldn't be needed, but for some reason
+    # lists are rendered twice
+    @$(&quot;tbody&quot;).html('')
+
+    @options.items.each(@addOne)
+
+  addOne: (item) =&gt;
+    item.collection = @options.items
+    @$(&quot;tbody&quot;).append(@getView({model: item}).render().el)
+
+  render: =&gt;
+    $(@el).html(@template(type: @options.type))
+    @addAll()
+
+    return this
+[/coffee]
+
+First thing to note is that this View has an initialize method. But that method will never be called automatically because we're going to extend this View into a new class and create an instance of the subclass instead. Also note that we're calling a function getView() that isn't defined in this class.
+
+[coffee]
+#= require ../index_view
+
+Trackbone.Views.Projects ||= {}
+
+class Trackbone.Views.Projects.IndexView extends Trackbone.Views.IndexView
+  initialize: () -&gt;
+    super
+    @options.type = &quot;Projects&quot;
+
+  getView: (options) =&gt;
+    new Trackbone.Views.Projects.ProjectView(options)
+[/coffee]
+
+We can call the into the parent class by using super in this view's initialize. This is just a <a href="http://coffeescript.org/#classes">CoffeeScript shortcut</a> to apply the same arguments to the parent's constructor. I've also explicitly required the parent View class since Rails does not guarantee which order JavaScript files will be loaded in the browser. The getView function here creates the correct ItemView based off the Project model.
+
+The New item View shown below is generic enough that it did not need to be extended for each model.
+
+[coffee]
+Trackbone.Views.Projects ||= {}
+
+class Trackbone.Views.NewView extends Backbone.View
+  template: JST[&quot;backbone/templates/new&quot;]
+
+  events:
+    &quot;submit #new-item&quot;: &quot;save&quot;
+
+  save: (e) -&gt;
+    e.preventDefault()
+    e.stopPropagation()
+
+    name = @.$(&quot;#new-item #name&quot;).val()
+    if name
+      $(&quot;#new-item #name&quot;).val('')
+      @collection.create(name: name)
+
+  render: -&gt;
+    $(@el).html(@template(type: @options.type))
+
+    return this
+[/coffee]
+
+The Item View is a bit trickier because it contained the select handling for when an item was clicked. To be able to reuse the handling, I had to make the load methods consistently named loadChildren as shown below.
+
+[coffee]
+class Trackbone.Models.Project extends Backbone.Model
+  paramRoot: 'project'
+
+  defaults:
+    name: null
+
+  loadChildren: -&gt;
+    @children = new Trackbone.Collections.FeaturesCollection([], {project_url: @url()});
+
+class Trackbone.Collections.ProjectsCollection extends Backbone.Collection
+  model: Trackbone.Models.Project
+  url: '/projects'
+[/coffee]
+
+One thing to point out in the Item View base class is that I believe I could have used the <a href="http://coffeescript.org/#fat_arrow">fat arrow</a> to retain the correct context.
+
+[coffee]
+Trackbone.Views.Projects ||= {}
+
+class Trackbone.Views.ItemView extends Backbone.View
+  template: JST[&quot;backbone/templates/item&quot;]
+
+  events:
+    &quot;click .select&quot; : &quot;select&quot;
+    &quot;click .destroy&quot; : &quot;destroy&quot;
+
+  tagName: &quot;tr&quot;
+  className: &quot;item&quot;
+
+  select: () -&gt; 
+    if @model.loadChildren
+      window.toggleSelected(@el)
+      @model.loadChildren()
+      do (@model, @renderChildren) -&gt;
+        @model.children.fetch(
+          success: @renderChildren(@model.children)
+        )
+        @model.children.fetch()
+
+  destroy: () -&gt;
+    @model.destroy()
+    this.remove()
+
+    return false
+
+  render: -&gt;
+    $(@el).html(@template(@model.toJSON() ))
+    return this
+[/coffee]
+
+Now the actual Project view only had to define how to render it's children.
+
+[coffee]
+#= require ../item_view
+
+Trackbone.Views.Projects ||= {}
+
+class Trackbone.Views.Projects.ProjectView extends Trackbone.Views.ItemView
+  template: JST[&quot;backbone/templates/item&quot;]
+
+  renderChildren: (children) -&gt; 
+    featuresView = new Trackbone.Views.Features.IndexView(items: children)
+    $(&quot;#list-features&quot;).html(featuresView.render().el)
+
+    # We should probably only render this once instead of each load
+    newFeaturesView = new Trackbone.Views.NewView(collection: children, type: &quot;Features&quot;)
+    $(&quot;#new-features&quot;).html(newFeaturesView.render().el)
+
+    $(&quot;#list-bugs&quot;).html('')
+    $(&quot;#new-bugs&quot;).html('')
+[/coffee]
+
+Again, here's the <a href="http://young-flower-9677.herokuapp.com/">demo</a> and <a href="https://github.com/skalb/trackbone/tree/version2">source</a>.
+
+I think this is a big improvement over the first version, though it's not quite as good as it could be. Having the loadChildren logic in the views doesn't really make sense, but I'm leaving those changes for when I implement permalinks.
