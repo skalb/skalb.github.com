@@ -85,13 +85,13 @@ meteor add backbone
 
 **Step 2: Setting up the project**
 
-Go ahead and delete *docshare-tutorial.js* and empty out the contents of *docshare-tutorial.html* .
+Go ahead and delete<span style="text-decoration: underline;">docshare-tutorial.js</span>and empty out the contents of <span style="text-decoration: underline;">docshare-tutorial.html</span>.
 
 Meteor lets you separate client and server code in 2 different ways:
 1) Using the Meteor.is_client and Meteor.is_server flags
 2) Place client and server Javascript in the /client and /server folders, respectively. Any Javascript at the root level with run on both.
 
-I prefer method 2 since it feels a bit cleaner to me, but feel free to instead combine everything into one file. Create  *docshare-tutorial.coffee*  at the root and  *client.coffee*  in /client folder and  *server.coffee*  in the /server folder.
+I prefer method 2 since it feels a bit cleaner to me, but feel free to instead combine everything into one file. Create <span style="text-decoration: underline;">docshare-tutorial.coffee</span> at the root and <span style="text-decoration: underline;">client.coffee</span> in /client folder and <span style="text-decoration: underline;">server.coffee</span> in the /server folder.
 
 **Step 3: Server**
 
@@ -104,7 +104,7 @@ Collections in Meteor are schemaless. We want our documents collection to be ava
 
 Our document object will have two fields: name and text. Let’s create a sample document on startup.
 
- *server.coffee* :
+<span style="text-decoration: underline;">server.coffee</span>:
 
 ``` coffeescript
 Meteor.startup ->
@@ -126,7 +126,7 @@ You will see an object with the properties we just created. This is the only tim
 
 Here’s we’ll define our head and body. The body will render two templates: documentList and documentView.
 
- *docshare-tutorial.html* :
+<span style="text-decoration: underline;">docshare-tutorial.html</span>:
 
 ``` html
 <head>
@@ -142,7 +142,7 @@ Here’s we’ll define our head and body. The body will render two templates: d
 
 Next, create the two templates needed to display the documents: documentList and document.
 
- *docshare-tutorial.html* :
+<span style="text-decoration: underline;">docshare-tutorial.html</span>:
 
 ``` html
 <template name="documentList">
@@ -163,7 +163,7 @@ Here we are using the built in Handlebars iterator #each to render the individua
 
 Now add the template to list the documents names each with an edit and delete button. We’ll also use a template method to determine which document is selected.
 
- *docshare-tutorial.html* :
+<span style="text-decoration: underline;">docshare-tutorial.html</span>:
 
 ``` html
 <template name="document">
@@ -179,7 +179,7 @@ Now add the template to list the documents names each with an edit and delete bu
 
 Lastly, let’s add the actual text field that the users can edit.
 
- *docshare-tutorial.html:* 
+<span style="text-decoration: underline;">docshare-tutorial.html:</span>
 
 ``` html
 
@@ -202,7 +202,7 @@ Note that this will only be rendered if a document is currently selected. Having
 
 First, we’ll setup a Backbone router to allow us to keep track of which document we’re viewing. This will allow us to support page refreshes and permalinking to documents.
 
- *client.coffee* :
+<span style="text-decoration: underline;">client.coffee</span>:
 
 ``` coffeescript
 DocumentsRouter = Backbone.Router.extend(
@@ -228,7 +228,7 @@ We are also using Meteor.startup again here but for a different purpose. On the 
 
 Next, we need to define where the documentList template gets its data and handle the create new button
 
- *client.coffee* :
+<span style="text-decoration: underline;">client.coffee</span>:
 
 ``` coffeescript
 Template.documentList.documents = ->
@@ -253,7 +253,7 @@ Documents.insert (and all collection operations) are non-blocking when called cl
 
 Next, define the selected property and event handlers for edit and delete:
 
- *client.coffee* :
+<span style="text-decoration: underline;">client.coffee</span>:
 
 ``` coffeescript
 Template.document.events =
@@ -270,7 +270,7 @@ Note that in handlers for events the this object is the actual Document object.
 
 Next, define the selectedDocument using the id stored in the session and update the text of that document when the user presses a key.
 
- *client.coffee* :
+<span style="text-decoration: underline;">client.coffee</span>:
 
 ``` coffeescript
 Template.documentView.selectedDocument = ->
@@ -290,7 +290,7 @@ Template.documentView.events =
 Meteor acknowledges in their docs: “For now, the event handler gets the template data from the top level of the current template, not the template data from the template context of the element that triggered the event. This will be changing.” This is why we have to pull the id from the session.
 
 Lastly, add the css style for the selected div:
- *docshare-tutorial.css:* 
+<span style="text-decoration: underline;">docshare-tutorial.css:</span>
 [css]
 .selected {
   background-color: yellow;
