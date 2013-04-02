@@ -1,0 +1,123 @@
+---
+layout: post
+title: Testing Backbone Routers in Meteor with Mocha
+tags:
+- Backbone
+- CoffeeScript
+- Meteor
+- Mocha
+- Programming
+- Testing
+status: publish
+type: post
+published: true
+comments: true
+meta:
+  _edit_last: '1'
+  _syntaxhighlighter_encoded: '1'
+  description: Testing Backbone Routers in Meteor with Mocha
+  keywords: meteor, meteor js, mocha, javascript, testing, unit testing, bdd, tdd,
+    coffeescript, routers, backbone
+  _avia_elements_avia_options_sentence: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
+  _avia_elements_theme_compatibility_mode: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
+  _facebookcount-cache: '0'
+  _twittercount-cache: '2'
+  title: Testing Backbone Routers in Meteor with Mocha
+  robotsmeta: index,follow
+---
+One of the downsides of Meteor and perhaps strongest complaint is that it doesn't play nicely with existing NodeJS modules. You're forced to use the available SmartPackages (or build one). This is a problem since the Mocha environment runs without the browser and doesn't have access to the libraries included by the SmartPackage.
+
+<!--more-->
+
+<em>Here's a previous <a title="Testing with Meteor, CoffeeScript and Mocha" href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/">post</a> describing how to setup everything</em>
+
+Creating the project:
+
+``` bash
+
+meteor create mocha-router
+meteor add backbone
+meteor add coffeescript
+cd mocha-router
+mkdir client
+mkdir server
+mkdir tests
+cd tests
+mkdir lib
+```
+
+When I first installed the modules, I installed them in my project root, but this caused Meteor to try to load them in the both the client/server environment which crashed the Meteor server. Luckily, Meteor will ignore anything in the tests folder so we can install the necessary modules there.
+
+``` bash
+npm install should
+npm install backbone
+mocha *.coffee --compilers coffee:coffee-script
+```
+
+My goal was to create a very basic Backbone router test. Normally, I'd define the router like so:
+
+``` coffeescript
+SampleRouter = @Backbone.Router.extend(
+  routes:
+    "": "index"
+
+  index: ->
+)
+new SampleRouter
+```
+
+This won't work when running the Mocha tests because it assumes the Meteor framework is present to load Backbone. I solved this by creating a factory for the router and injecting the Backbone module.
+
+Note, I need to put this module in tests/lib so Meteor will make sure to load it first
+
+lib/sample_router_factory.coffee:
+``` coffeescript
+root = exports ? this
+
+class SampleRouterFactory
+  constructor: (@Backbone) ->
+
+  getRouter: () ->
+    SampleRouter = @Backbone.Router.extend(
+      routes:
+        "": "index"
+
+      index: ->
+        Session.set "test", "test"
+    )
+    new SampleRouter
+
+root.SampleRouterFactory = SampleRouterFactory
+```
+
+Exports is a global object accessible in the nodeJS environment that Mocha runs in. See this <a href="http://visionmedia.github.com/masteringnode/book.html">ebook</a> for more details.
+
+This module will now create a class that will return a new instance of the SampleRouter.
+
+Now, let's look at the test case:
+
+tests/sample_router_factory_test.coffee
+``` coffeescript
+should = require('should')
+Backbone = require('backbone')
+SampleRouterFactory = require('../client/lib/sample_router_factory').SampleRouterFactory
+
+describe "SampleRouter", ->
+  factory = new SampleRouterFactory(Backbone)
+  router = factory.getRouter(Backbone)
+  it "should have an index router", ->
+    router.routes[''].should.equal('index')
+```
+
+Lastly, in the actual Meteor app I create the app a similar way:
+
+mocha-router.coffee
+``` coffeescript
+Meteor.startup -> 
+  factory = new SampleRouterFactory(Backbone)
+  router = factory.getRouter(Backbone)
+```
+
+Again, there's no need to require either Backbone (loaded as a SmartPackage) or the actual SampleRouterFactory because Meteor treats all of your CoffeeScript files as a single file and consequently scope.
+
+<a href="https://github.com/skalb/meteor-examples/tree/master/mocha-router">Source code here.</a>
