@@ -30,7 +30,7 @@ I modified it to work for two colors as shown below (warning messy code!):
 <!--more-->
 
 [javascript]
-&lt;script type=&quot;text/JavaScript&quot;&gt;
+<script type="text/JavaScript">
 $(document).ready(function(){
 	// Function to get the Max value in Array
     Array.max = function( array ){
@@ -49,7 +49,7 @@ $(document).ready(function(){
 	// add classes to cells based on nearest 10 value
 	$('#heat-map-3 tbody td').not('.stats-title').each(function(){
 		var val = parseInt($(this).text());
-    if (val &lt; middle) {
+    if (val < middle) {
       var pos = parseInt(Math.round((val/middle)*100)).toFixed(0);
   		relative = parseInt(pos / 100.0 * 225).toFixed(0);
   		clr = 'rgb('+relative+','+255+','+relative+')';
@@ -63,7 +63,7 @@ $(document).ready(function(){
     }
 	});
 });
-&lt;/script&gt;
+</script>
 [/javascript]
 
 Here's a working <a href="http://www.skalb.com/wp-content/uploads/jquery-data-heat-map.htm">example</a>.

@@ -58,7 +58,7 @@ Modifications:
 
 <span style="text-decoration: underline;">routes.rb</span>:
 [ruby]
-root :to =&gt; &quot;home#index&quot;
+root :to => "home#index"
 
 Trackbone::Application.routes.draw do
   resources :projects do
@@ -78,45 +78,45 @@ Originally, I scaffolded Backbone here as well. On review, I'm not sure I would 
 Features only exist in the context of a Project, so they should only be loaded for a specific Project and similarly for Bugs.
 
 <span style="text-decoration: underline;">javascripts/backbone/models/project.js.coffee</span>:
-[coffee]
+``` coffeescript
 class Trackbone.Models.Project extends Backbone.Model
   paramRoot: 'project'
 
   defaults:
     name: null
 
-  loadFeatures: -&gt;
+  loadFeatures: ->
     @features = new Trackbone.Collections.FeaturesCollection([], {project_url: @url()});
 
 class Trackbone.Collections.ProjectsCollection extends Backbone.Collection
   model: Trackbone.Models.Project
   url: '/projects'
-[/coffee]
+```
 
 On reflection, loadFeatures is poorly named. It's really more of an 'initialize', but anyways, calling that method will create a FeaturesCollection and pass in the Url for this project. You can see how this is used in the Features model
 
 <span style="text-decoration: underline;">javascripts/backbone/models/feature.js.coffee</span>:
-[coffee]
+``` coffeescript
 class Trackbone.Models.Feature extends Backbone.Model
   paramRoot: 'feature'
 
   defaults:
     name: null
 
-  loadBugs: -&gt;
+  loadBugs: ->
     @bugs = new Trackbone.Collections.BugsCollection([], {feature_url: @url()});
 
 class Trackbone.Collections.FeaturesCollection extends Backbone.Collection
   model: Trackbone.Models.Feature
-  initialize: (model, args) -&gt;
-    @url = -&gt;
-      args.project_url + &quot;/features&quot;
-[/coffee]
+  initialize: (model, args) ->
+    @url = ->
+      args.project_url + "/features"
+```
 
 Using the project_url from args will prepend all RESTful requests made on the features model with projects/:project_id.
 
 <span style="text-decoration: underline;">javascripts/backbone/models/bug.js.coffee</span>:
-[coffee]
+``` coffeescript
 class Trackbone.Models.Bug extends Backbone.Model
   paramRoot: 'bug'
 
@@ -125,201 +125,201 @@ class Trackbone.Models.Bug extends Backbone.Model
 
 class Trackbone.Collections.BugsCollection extends Backbone.Collection
   model: Trackbone.Models.Bug
-  initialize: (model, args) -&gt;
-    @url = -&gt;
-      args.feature_url + &quot;/bugs&quot;
-[/coffee]
+  initialize: (model, args) ->
+    @url = ->
+      args.feature_url + "/bugs"
+```
 
 <strong>Backbone Routers:</strong>
 
 Next we need to create the Projects router which will be the entry point into our single page app.
 
 <span style="text-decoration: underline;">javascripts/backbone/routers/projects_router.js.coffee</span>:
-[coffee]
+``` coffeescript
 class Trackbone.Routers.ProjectsRouter extends Backbone.Router
-  initialize: (options) -&gt;
+  initialize: (options) ->
     @projects = new Trackbone.Collections.ProjectsCollection()
     @projects.reset options.projects
 
   routes:
-    &quot;.*&quot; : &quot;index&quot;
+    ".*" : "index"
 
-  index: -&gt;
+  index: ->
     @view = new Trackbone.Views.Projects.IndexView(projects: @projects)
-    $(&quot;#list-projects&quot;).html(@view.render().el)
+    $("#list-projects").html(@view.render().el)
 
     @newProjectView = new Trackbone.Views.Projects.NewView(collection: @projects)
-    $(&quot;#new-projects&quot;).html(@newProjectView.render().el)
-[/coffee]
+    $("#new-projects").html(@newProjectView.render().el)
+```
 
 Because we're not worrying about permalinks (yet! I've started looking into this, and hope to create a follow-up post), we only need one catch-all route. We then pass in the respective models to our views.
 
 <strong>Listing projects:</strong>
 
 Create <span style="text-decoration: underline;">views/projects/index.html.erb</span>:
-[html]
-&lt;h1&gt;Trackbone&lt;/h1&gt;
-&lt;hr&gt;
-&lt;div class=&quot;container&quot;&gt;
-  &lt;div id=&quot;new-projects&quot;&gt;&lt;/div&gt;
-  &lt;div id=&quot;list-projects&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;container&quot;&gt;
-  &lt;div id=&quot;new-features&quot;&gt;&lt;/div&gt;
-  &lt;div id=&quot;list-features&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;container&quot;&gt;
-  &lt;div id=&quot;new-bugs&quot;&gt;&lt;/div&gt;
-  &lt;div id=&quot;list-bugs&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
+``` html
+<h1>Trackbone</h1>
+<hr>
+<div class="container">
+  <div id="new-projects"></div>
+  <div id="list-projects"></div>
+</div>
+<div class="container">
+  <div id="new-features"></div>
+  <div id="list-features"></div>
+</div>
+<div class="container">
+  <div id="new-bugs"></div>
+  <div id="list-bugs"></div>
+</div>
 
-&lt;script type=&quot;text/javascript&quot;&gt;
+<script type="text/javascript">
   $(function() {
     window.router = new Trackbone.Routers.ProjectsRouter(
-      { projects: &lt;%= @projects.to_json.html_safe -%&gt; }
+      { projects: <%= @projects.to_json.html_safe -%> }
     );
     Backbone.history.start();
   });
-&lt;/script&gt;
-[/html]
+</script>
+```
 
 There is a container, new, and list div for each model. Backbone will load data from our Rest API, build HTML using the Views and Templates and inject that HTML into those DIV elements. Note that we are passing in projects from Rails to the router. This allows us to grab data from the server when the page is first requested and save an additional call on page load. Since this is a single page app, this is the only Rails view we need.
 
 To display our Project data we need three templates: index to list projects, project for a specific item, and new to create a project.
 
 <span style="text-decoration: underline;">javascripts/backbone/templates/shared/item.jst.ejs</span>:
-[html]
-&lt;td&gt;&lt;a href=&quot;#&quot; class=&quot;select&quot;&gt;&lt;%= name %&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href=&quot;#&quot; class=&quot;destroy&quot;&gt;Destroy&lt;/a&gt;&lt;/td&gt;
-[/html]
+``` html
+<td><a href="#" class="select"><%= name %></td>
+<td><a href="#" class="destroy">Destroy</a></td>
+```
 
 <span style="text-decoration: underline;">javascripts/backbone/templates/projects/index.jst.ejs</span>:
-[html]
-&lt;h1&gt;Listing projects&lt;/h1&gt;
+``` html
+<h1>Listing projects</h1>
 
-&lt;table id=&quot;projects-table&quot;&gt;
-  &lt;tr&gt;
-    &lt;th&gt;Name&lt;/th&gt;
-    &lt;th&gt;&lt;/th&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
+<table id="projects-table">
+  <tr>
+    <th>Name</th>
+    <th></th>
+  </tr>
+</table>
 
-&lt;br/&gt;
-[/html]
+<br/>
+```
 
 <span style="text-decoration: underline;">javascripts/backbone/templates/projects/new.jst.ejs</span>:
-[html]
-&lt;h1&gt;New project&lt;/h1&gt;
+``` html
+<h1>New project</h1>
 
-&lt;form id=&quot;new-project&quot; name=&quot;project&quot;&gt;
-  &lt;div class=&quot;field&quot;&gt;
-    &lt;label for=&quot;name&quot;&gt; name:&lt;/label&gt;
-    &lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot; value=&quot;&lt;%= name %&gt;&quot; &gt;
-  &lt;/div&gt;
+<form id="new-project" name="project">
+  <div class="field">
+    <label for="name"> name:</label>
+    <input type="text" name="name" id="name" value="<%= name %>" >
+  </div>
 
-  &lt;div class=&quot;actions&quot;&gt;
-    &lt;input type=&quot;submit&quot; value=&quot;Create Project&quot; /&gt;
-  &lt;/div&gt;
+  <div class="actions">
+    <input type="submit" value="Create Project" />
+  </div>
 
-&lt;/form&gt;
-[/html]
+</form>
+```
 
 These should be fairly self-explanatory. Each template will also need a Backbone View as well.
 
 <span style="text-decoration: underline;">javascripts/backbone/views/projects/index_view.js.coffee</span>:
-[coffee]
+``` coffeescript
 Trackbone.Views.Projects ||= {}
 
 class Trackbone.Views.Projects.IndexView extends Backbone.View
-  template: JST[&quot;backbone/templates/projects/index&quot;]
+  template: JST["backbone/templates/projects/index"]
 
-  initialize: () -&gt;
+  initialize: () ->
     @options.projects.bind('reset', @addAll)
     @options.projects.bind('sync', @render)
 
-  addAll: () =&gt;
+  addAll: () =>
     @options.projects.each(@addOne)
 
-  addOne: (project) =&gt;
+  addOne: (project) =>
     view = new Trackbone.Views.Projects.ProjectView({model : project})
-    @$(&quot;tbody&quot;).append(view.render().el)
+    @$("tbody").append(view.render().el)
 
-  render: =&gt;
+  render: =>
     $(@el).html(@template(projects: @options.projects.toJSON()))
     @addAll()
 
     return this
-[/coffee]
+```
 
 This view receives the entire list of projects, renders the index view and appends a project view for each project.
 
 <span style="text-decoration: underline;">javascripts/backbone/views/projects/new_view.js.coffee</span>:
-[coffee]
+``` coffeescript
 Trackbone.Views.Projects ||= {}
 
 class Trackbone.Views.Projects.NewView extends Backbone.View
-  template: JST[&quot;backbone/templates/projects/new&quot;]
+  template: JST["backbone/templates/projects/new"]
 
   events:
-    &quot;submit #new-project&quot;: &quot;save&quot;
+    "submit #new-project": "save"
 
-  save: (e) -&gt;
+  save: (e) ->
     e.preventDefault()
     e.stopPropagation()
 
-    name = $(&quot;#new-project #name&quot;).val()
+    name = $("#new-project #name").val()
     if name
-      $(&quot;#new-project #name&quot;).val('')
+      $("#new-project #name").val('')
       @collection.create(name: name)
 
-  render: -&gt;
+  render: ->
     $(@el).html(@template())
 
     return this
-[/coffee]
+```
 
 The new view simply providers a handler for creating a new project within the collection. The create method actually does three things: creates the model, POSTs the model to the server, and adds the model to the collection.
 
 <span style="text-decoration: underline;">javascripts/backbone/views/projects/project_view.js.coffee</span>:
-[coffee]
+``` coffeescript
 Trackbone.Views.Projects ||= {}
 
 class Trackbone.Views.Projects.ProjectView extends Backbone.View
-  template: JST[&quot;backbone/templates/shared/item&quot;]
+  template: JST["backbone/templates/shared/item"]
 
   events:
-    &quot;click .select&quot; : &quot;select&quot;
-    &quot;click .destroy&quot; : &quot;destroy&quot;
+    "click .select" : "select"
+    "click .destroy" : "destroy"
 
-  tagName: &quot;tr&quot;
-  className: &quot;item&quot;
+  tagName: "tr"
+  className: "item"
 
-  select: () -&gt; 
+  select: () -> 
     window.toggleSelected(@el)
     @model.loadFeatures()
-    do (@model) -&gt;
-      @model.features.fetch success: -&gt;
+    do (@model) ->
+      @model.features.fetch success: ->
         featuresView = new Trackbone.Views.Features.IndexView(features: @model.features)
-        $(&quot;#list-features&quot;).html(featuresView.render().el)
+        $("#list-features").html(featuresView.render().el)
 
         # We should probably only render this once instead of each load
         newFeaturesView = new Trackbone.Views.Features.NewView(collection: @model.features)
-        $(&quot;#new-features&quot;).html(newFeaturesView.render().el)
+        $("#new-features").html(newFeaturesView.render().el)
 
-        $(&quot;#list-bugs&quot;).html('')
-        $(&quot;#new-bugs&quot;).html('')
+        $("#list-bugs").html('')
+        $("#new-bugs").html('')
     @model.features.fetch()
 
-  destroy: () -&gt;
+  destroy: () ->
     @model.destroy()
     this.remove()
 
     return false
 
-  render: -&gt;
+  render: ->
     $(@el).html(@template(@model.toJSON() ))
     return this
-[/coffee]
+```
 
 This view is really the heart of the app. Every time a Project is selected, we'll display the Features for that Project by calling fetch() and binding to success(). 
 

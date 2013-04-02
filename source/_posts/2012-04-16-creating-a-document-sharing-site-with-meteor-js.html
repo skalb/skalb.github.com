@@ -55,33 +55,33 @@ Create and deploy a real time document sharing website. The final product is at:
 <ul>
 	<li>Install Meteor</li>
 </ul>
-[shell]
+``` bash
 $ curl install.meteor.com | /bin/sh
-[/shell]
+```
 
 <strong>Step 1: Getting things started</strong>
 
 Lets create the app:
 
-[shell]
+``` bash
 meteor create docshare-tutorial
-[/shell]
+```
 
 Now, start the meteor server:
 
-[shell]
+``` bash
 cd docshare-tutorial
 meteor
-[/shell]
+```
 
 You should see the default site at&nbsp;<a href="http://localhost:3000/">http://localhost:3000</a>:
 
 Lastly, add the other packages we are going to use
 
-[shell]
+``` bash
 meteor add coffeescript
 meteor add backbone
-[/shell]
+```
 
 <strong>Step 2: Setting up the project</strong>
 
@@ -97,30 +97,28 @@ I prefer method 2 since it feels a bit cleaner to me, but feel free to instead c
 
 Collections in Meteor are schemaless. We want our documents collection to be available to both the server and the client so we’ll add it to the root level.
 
-<span style="text-decoration: underline;">docshare-tutorial.coffee</span>:
+``` coffeescript docshare-tutorial.coffee
+ @Documents = new Meteor.Collection("documents")
 
-[coffee]
- @Documents = new Meteor.Collection(&quot;documents&quot;)
-
-[/coffee]
+```
 
 Our document object will have two fields: name and text. Let’s create a sample document on startup.
 
 <span style="text-decoration: underline;">server.coffee</span>:
 
-[coffee]
-Meteor.startup -&gt;
+``` coffeescript
+Meteor.startup ->
   if Documents.find().count() is 0
     Documents.insert
-      name: &quot;Sample doc&quot;
-      text: &quot;Write here...&quot;
-[/coffee]
+      name: "Sample doc"
+      text: "Write here..."
+```
 
 Now, if you restart the meteor server, you’ll be able to access that document in the browser. Try this in the developer console:
 
-[coffee]
+``` coffeescript
 Documents.findOne()
-[/coffee]
+```
 
 You will see an object with the properties we just created. This is the only time you should need to restart the meteor server.
 
@@ -130,36 +128,36 @@ Here’s we’ll define our head and body. The body will render two templates: d
 
 <span style="text-decoration: underline;">docshare-tutorial.html</span>:
 
-[html]
-&lt;head&gt;
-  &lt;title&gt;docshare&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  {{&gt; documentList}}
-  &lt;hr&gt;
-  {{&gt; documentView}}
-&lt;/body&gt;
+``` html
+<head>
+  <title>docshare</title>
+</head>
+<body>
+  {{> documentList}}
+  <hr>
+  {{> documentView}}
+</body>
 
-[/html]
+```
 
 Next, create the two templates needed to display the documents: documentList and document.
 
 <span style="text-decoration: underline;">docshare-tutorial.html</span>:
 
-[html]
-&lt;template name=&quot;documentList&quot;&gt;
-  &lt;h1&gt;Welcome to document sharing!&lt;/h1&gt;
-  &lt;div&gt;
+``` html
+<template name="documentList">
+  <h1>Welcome to document sharing!</h1>
+  <div>
     {{#each documents}}
-      {{&gt; document}}
+      {{> document}}
     {{/each}}
-  &lt;/div&gt;
-  &lt;div id=&quot;createDocument&quot;&gt;
-    Name: &lt;input type=&quot;text&quot; id=&quot;new-document-name&quot; placeholder=&quot;New document&quot; /&gt;&lt;input type=&quot;button&quot; id=&quot;new-document&quot; value=&quot;create&quot;/&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
+  </div>
+  <div id="createDocument">
+    Name: <input type="text" id="new-document-name" placeholder="New document" /><input type="button" id="new-document" value="create"/>
+  </div>
+</template>
 
-[/html]
+```
 
 Here we are using the built in Handlebars iterator #each to render the individual document objects. Finally, there’s a input field and create button to add a new document.
 
@@ -167,36 +165,36 @@ Now add the template to list the documents names each with an edit and delete bu
 
 <span style="text-decoration: underline;">docshare-tutorial.html</span>:
 
-[html]
-&lt;template name=&quot;document&quot;&gt;
-  &lt;div class=&quot;document {{selected}}&quot;&gt;
-    &lt;p&gt;
+``` html
+<template name="document">
+  <div class="document {{selected}}">
+    <p>
     {{ name }}
-    &lt;input type=&quot;button&quot; id=&quot;edit-document&quot; value=&quot;Edit&quot;/&gt;
-    &lt;input type=&quot;button&quot; id=&quot;delete-document&quot; value=&quot;Delete&quot;/&gt;
-    &lt;/p&gt;
-   &lt;/div&gt;
-&lt;/template&gt;
-[/html]
+    <input type="button" id="edit-document" value="Edit"/>
+    <input type="button" id="delete-document" value="Delete"/>
+    </p>
+   </div>
+</template>
+```
 
 Lastly, let’s add the actual text field that the users can edit.
 
 <span style="text-decoration: underline;">docshare-tutorial.html:</span>
 
-[html]
+``` html
 
-&lt;template name=&quot;documentView&quot;&gt;
+<template name="documentView">
   {{#if selectedDocument}}
   {{#with selectedDocument}}
-    &lt;div&gt;
-      &lt;p&gt;{{ name }}&lt;/p&gt;
-        &lt;textarea id=&quot;document-text&quot; rows=&quot;10&quot; cols=&quot;80&quot;&gt;{{ text }}&lt;/textarea&gt;
-    &lt;/div&gt;
+    <div>
+      <p>{{ name }}</p>
+        <textarea id="document-text" rows="10" cols="80">{{ text }}</textarea>
+    </div>
    {{/with}}
    {{/if}}
-&lt;/template&gt;
+</template>
 
-[/html]
+```
 
 Note that this will only be rendered if a document is currently selected. Having both an #if and a #with seems redundant, but I didn’t see a better way. Based off the Handlebars documentation, I should only need the #if, but that doesn’t work.
 
@@ -206,23 +204,23 @@ First, we’ll setup a Backbone router to allow us to keep track of which docume
 
 <span style="text-decoration: underline;">client.coffee</span>:
 
-[coffee]
+``` coffeescript
 DocumentsRouter = Backbone.Router.extend(
   routes:
-    &quot;:document_id&quot;: &quot;main&quot;
+    ":document_id": "main"
 
-  main: (document_id) -&gt;
-    Session.set &quot;document_id&quot;, document_id
+  main: (document_id) ->
+    Session.set "document_id", document_id
 
-  setDocument: (document_id) -&gt;
+  setDocument: (document_id) ->
     @navigate(document_id, true)
 )
 
 Router = new DocumentsRouter
 
-Meteor.startup -&gt;
+Meteor.startup ->
   Backbone.history.start pushState: true
-[/coffee]
+```
 
 Basically this will store the document_id into the Meteor session whenever the user navigates to a URL or form /:document_id. If you’re not familar with Backbone, don’t worry about this, or read up at <a href="http://backbonejs.org/">http://backbonejs.org/</a>
 
@@ -232,22 +230,22 @@ Next, we need to define where the documentList template gets its data and handle
 
 <span style="text-decoration: underline;">client.coffee</span>:
 
-[coffee]
-Template.documentList.documents = -&gt;
+``` coffeescript
+Template.documentList.documents = ->
   Documents.find({},
     sort:
       name: 1
   )
 
 Template.documentList.events =
-  'click #new-document': (e) -&gt;
+  'click #new-document': (e) ->
     name = $('#new-document-name').val()
     if name
       Documents.insert(
         name: name
-        text: &quot;&quot;
+        text: ""
       )
-[/coffee]
+```
 
 Notice that we’re sorting the documents by name. Each time a new document is added it will be correctly injected into the DOM. The entire list is not recreated. There is also a bit of validation to make sure the name exists.
 
@@ -257,16 +255,16 @@ Next, define the selected property and event handlers for edit and delete:
 
 <span style="text-decoration: underline;">client.coffee</span>:
 
-[coffee]
+``` coffeescript
 Template.document.events =
-  'click #delete-document': (e) -&gt;
+  'click #delete-document': (e) ->
     Documents.remove(@_id)
-  'click #edit-document': (e) -&gt;
+  'click #edit-document': (e) ->
     Router.setDocument(@_id)
 
-Template.document.selected = -&gt;
-  if Session.equals(&quot;document_id&quot;, @_id) then &quot;selected&quot; else &quot;&quot;
-[/coffee]
+Template.document.selected = ->
+  if Session.equals("document_id", @_id) then "selected" else ""
+```
 
 Note that in handlers for events the this object is the actual Document object.
 
@@ -274,20 +272,20 @@ Next, define the selectedDocument using the id stored in the session and update 
 
 <span style="text-decoration: underline;">client.coffee</span>:
 
-[coffee]
-Template.documentView.selectedDocument = -&gt;
-  document_id = Session.get(&quot;document_id&quot;)
+``` coffeescript
+Template.documentView.selectedDocument = ->
+  document_id = Session.get("document_id")
   Documents.findOne(
     _id: document_id
   )
 
 Template.documentView.events =
-  'keyup #document-text': (e) -&gt;
+  'keyup #document-text': (e) ->
     # @_id should work here, but it doesn't
-    sel = _id: Session.get(&quot;document_id&quot;)
+    sel = _id: Session.get("document_id")
     mod = $set: text: $('#document-text').val()
     Documents.update(sel, mod)
-[/coffee]
+```
 
 Meteor acknowledges in their docs: “For now, the event handler gets the template data from the top level of the current template, not the template data from the template context of the element that triggered the event. This will be changing.” This is why we have to pull the id from the session.
 

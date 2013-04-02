@@ -42,30 +42,30 @@ What you'll need:
 </ul>
 </div>
 <div>Getting everything running:</div>
-<div>[shell]
+<div>``` bash
 meteor create mocha
 cd mocha
 meteor add coffeescript
-[/shell]
+```
 
 </div>
 Setting up Mocha to watch our coffee files and send Growl notifications:
 
-[shell]
+``` bash
 
 mocha tests/*.coffee -w -G --compilers coffee:coffee-script
 
-[/shell]
+```
 
 Now to create a sample test, test.coffee:
 
-[coffee]
-describe &quot;Array&quot;, -&gt;
-  describe &quot;#indexOf()&quot;, -&gt;
-    it &quot;should return -1 when the value is not present&quot;, -&gt;
+``` coffeescript
+describe "Array", ->
+  describe "#indexOf()", ->
+    it "should return -1 when the value is not present", ->
       assert.equal -1, [1, 2, 3].indexOf(1)
       assert.equal -1, [1, 2, 3].indexOf(0)
-[/coffee]
+```
 
 Mocha should notice the file change and run the tests showing you the passing test.
 

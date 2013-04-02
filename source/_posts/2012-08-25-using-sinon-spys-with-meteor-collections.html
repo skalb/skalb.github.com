@@ -29,82 +29,82 @@ The Meteor.Collection object exposes methods for querying the MongoDB collection
 
 Add the new module we need:
 
-[shell]
+``` bash
 $ npm install sinon
-[/shell]
+```
 
 Here's how to use the spy:
 
 lib/sample_router_factory.coffee:
-[coffee]
+``` coffeescript
 items =
   find: sinon.spy()
-[/coffee]
+```
 
 Now, let's write our test:
 
 tests/sample_router_factory_test.coffee:
-[coffee]
-it &quot;should retrieve all items&quot;, -&gt;
+``` coffeescript
+it "should retrieve all items", ->
   router.navigate('', true)
   items.find.called.should.equal true
-[/coffee]
+```
 
 This will fail, since we need to first modify our Router to accept a collection as an argument and then call find on it.
 
 lib/sample_router_factory.coffee:
-[coffee]
+``` coffeescript
 root = exports ? this
 
 class SampleRouterFactory
-  constructor: (@Backbone, @Items) -&gt;
+  constructor: (@Backbone, @Items) ->
 
-  getRouter: () -&gt;
+  getRouter: () ->
     SampleRouter = @Backbone.Router.extend(
       routes:
-        &quot;&quot;: &quot;index&quot;
+        "": "index"
 
-      index: =&gt;
+      index: =>
         items = @Items.find()
     )
     new SampleRouter
 
 root.SampleRouterFactory = SampleRouterFactory
-[/coffee]
+```
 
 This <em>should</em> pass, but yet doesn't. Why? Thinking about the assumption our test is making when using the a Backbone router, it likely depends on Backbone initialization. We can try this in our test, also:
 
-[coffee]
+``` coffeescript
 Backbone.history.start
   silent: true
   pushState: true
-[/coffee]
+```
 
 This doesn't work either because Backbone assumes we are in the browser when accessing <strong>window</strong>. I'm pretty sure this is not the approach I want. We don't need to add a dependency on Backbone's internal behavior to test a method of my Router. My previous test verifies that the root path will call an index method, so now I only need to call that index method and validate that behavior. This has the added benefit of simplifying the test.
 
 Here's the final version of my tests:
 
 tests/sample_router_factory_test.coffee:
-[coffee]
+``` coffeescript
 util = require('util')
 should = require('should')
 Backbone = require('backbone')
 sinon = require('sinon')
 SampleRouterFactory = require('../client/lib/sample_router_factory').SampleRouterFactory
 
-describe &quot;SampleRouter&quot;, -&gt;
+describe "SampleRouter", ->
   items =
     find: sinon.spy()
 
   factory = new SampleRouterFactory(Backbone, items)
   router = factory.getRouter(Backbone)
 
-  it &quot;should have an index route&quot;, -&gt;
+  it "should have an index route", ->
     router.routes[''].should.equal('index')
 
-  it &quot;should retrieve all items when navigating to index&quot;, -&gt;
+  it "should retrieve all items when navigating to index", ->
     router.index()
     items.find.called.should.equal true
-[/coffee]
+```
 
 A bit roundabout, but in the end what I was trying to accomplish. Source <a href="https://github.com/skalb/meteor-examples/tree/master/mocha-router">here</a>.
