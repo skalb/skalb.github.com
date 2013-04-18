@@ -42,13 +42,13 @@ What you'll need:
 </ul>
 </div>
 <div>Getting everything running:</div>
-<div>``` bash
+
+``` bash
 meteor create mocha
 cd mocha
 meteor add coffeescript
 ```
 
-</div>
 Setting up Mocha to watch our coffee files and send Growl notifications:
 
 ``` bash
@@ -57,9 +57,9 @@ mocha tests/*.coffee -w -G --compilers coffee:coffee-script
 
 ```
 
-Now to create a sample test, test.coffee:
+Now to create a sample test:
 
-``` coffeescript
+``` coffeescript test.coffee
 describe "Array", ->
   describe "#indexOf()", ->
     it "should return -1 when the value is not present", ->

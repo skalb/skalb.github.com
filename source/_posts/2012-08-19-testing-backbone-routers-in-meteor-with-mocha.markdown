@@ -34,7 +34,6 @@ One of the downsides of Meteor and perhaps strongest complaint is that it doesn'
 Creating the project:
 
 ``` bash
-
 meteor create mocha-router
 meteor add backbone
 meteor add coffeescript

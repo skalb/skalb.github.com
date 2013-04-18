@@ -29,7 +29,7 @@ I modified it to work for two colors as shown below (warning messy code!):
 
 <!--more-->
 
-[javascript]
+``` javascript
 <script type="text/JavaScript">
 $(document).ready(function(){
 	// Function to get the Max value in Array
@@ -64,6 +64,6 @@ $(document).ready(function(){
 	});
 });
 </script>
-[/javascript]
+```
 
 Here's a working <a href="http://www.skalb.com/wp-content/uploads/jquery-data-heat-map.htm">example</a>.

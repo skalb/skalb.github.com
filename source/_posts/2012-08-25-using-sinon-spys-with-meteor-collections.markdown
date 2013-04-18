@@ -30,21 +30,19 @@ The Meteor.Collection object exposes methods for querying the MongoDB collection
 Add the new module we need:
 
 ``` bash
-$ npm install sinon
+npm install sinon
 ```
 
 Here's how to use the spy:
 
-lib/sample_router_factory.coffee:
-``` coffeescript
+``` coffeescript lib/sample_router_factory.coffee
 items =
   find: sinon.spy()
 ```
 
 Now, let's write our test:
 
-tests/sample_router_factory_test.coffee:
-``` coffeescript
+``` coffeescript tests/sample_router_factory_test.coffee
 it "should retrieve all items", ->
   router.navigate('', true)
   items.find.called.should.equal true
@@ -52,8 +50,7 @@ it "should retrieve all items", ->
 
 This will fail, since we need to first modify our Router to accept a collection as an argument and then call find on it.
 
-lib/sample_router_factory.coffee:
-``` coffeescript
+``` coffeescript lib/sample_router_factory.coffee
 root = exports ? this
 
 class SampleRouterFactory
@@ -84,8 +81,7 @@ This doesn't work either because Backbone assumes we are in the browser when acc
 
 Here's the final version of my tests:
 
-tests/sample_router_factory_test.coffee:
-``` coffeescript
+``` coffeescript tests/sample_router_factory_test.coffee
 util = require('util')
 should = require('should')
 Backbone = require('backbone')

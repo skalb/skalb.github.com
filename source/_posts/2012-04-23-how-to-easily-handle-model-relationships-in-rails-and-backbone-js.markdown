@@ -29,7 +29,7 @@ meta:
 ---
 While playing around with Backbone.js, I couldn't find an easy way to build an app that used the RESTful hierarchy of my models. I think <a href="http://spinejs.com/docs/relations">Spine's</a> implementation is fairly straightforward.
 
-I did find arelevant<a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn't seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.
+I did find a relevant<a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn't seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.
 
 I wanted to learn more about Backbone, so I prototyped a very basic project management app using Rails and Backbone called Trackbone that I'll walk through in this post.
 
@@ -56,8 +56,7 @@ Modifications:
 <li>Model is returned after #update</li>
 </ul>
 
-<span style="text-decoration: underline;">routes.rb</span>:
-[ruby]
+``` ruby routes.rb
 root :to => "home#index"
 
 Trackbone::Application.routes.draw do
@@ -67,7 +66,7 @@ Trackbone::Application.routes.draw do
     end
   end
 end
-[/ruby]
+```
 
 For setting up Backbone, the rails-backbone gem provides a good <a href="https://github.com/codebrew/backbone-rails/blob/master/README.md">guide</a>. 
 
@@ -77,8 +76,7 @@ Originally, I scaffolded Backbone here as well. On review, I'm not sure I would 
 
 Features only exist in the context of a Project, so they should only be loaded for a specific Project and similarly for Bugs.
 
-<span style="text-decoration: underline;">javascripts/backbone/models/project.js.coffee</span>:
-``` coffeescript
+``` coffeescript javascripts/backbone/models/project.js.coffee
 class Trackbone.Models.Project extends Backbone.Model
   paramRoot: 'project'
 
@@ -95,8 +93,7 @@ class Trackbone.Collections.ProjectsCollection extends Backbone.Collection
 
 On reflection, loadFeatures is poorly named. It's really more of an 'initialize', but anyways, calling that method will create a FeaturesCollection and pass in the Url for this project. You can see how this is used in the Features model
 
-<span style="text-decoration: underline;">javascripts/backbone/models/feature.js.coffee</span>:
-``` coffeescript
+``` coffeescript javascripts/backbone/models/feature.js.coffee
 class Trackbone.Models.Feature extends Backbone.Model
   paramRoot: 'feature'
 
@@ -115,8 +112,7 @@ class Trackbone.Collections.FeaturesCollection extends Backbone.Collection
 
 Using the project_url from args will prepend all RESTful requests made on the features model with projects/:project_id.
 
-<span style="text-decoration: underline;">javascripts/backbone/models/bug.js.coffee</span>:
-``` coffeescript
+``` coffeescript javascripts/backbone/models/bug.js.coffee
 class Trackbone.Models.Bug extends Backbone.Model
   paramRoot: 'bug'
 
@@ -134,8 +130,7 @@ class Trackbone.Collections.BugsCollection extends Backbone.Collection
 
 Next we need to create the Projects router which will be the entry point into our single page app.
 
-<span style="text-decoration: underline;">javascripts/backbone/routers/projects_router.js.coffee</span>:
-``` coffeescript
+``` coffeescript javascripts/backbone/routers/projects_router.js.coffee
 class Trackbone.Routers.ProjectsRouter extends Backbone.Router
   initialize: (options) ->
     @projects = new Trackbone.Collections.ProjectsCollection()
@@ -156,8 +151,7 @@ Because we're not worrying about permalinks (yet! I've started looking into this
 
 **Listing projects:**
 
-Create <span style="text-decoration: underline;">views/projects/index.html.erb</span>:
-``` html
+``` html views/projects/index.html.erb
 <h1>Trackbone</h1>
 <hr>
 <div class="container">
@@ -187,14 +181,12 @@ There is a container, new, and list div for each model. Backbone will load data 
 
 To display our Project data we need three templates: index to list projects, project for a specific item, and new to create a project.
 
-<span style="text-decoration: underline;">javascripts/backbone/templates/shared/item.jst.ejs</span>:
-``` html
+``` html javascripts/backbone/templates/shared/item.jst.ejs
 <td><a href="#" class="select"><%= name %></td>
 <td><a href="#" class="destroy">Destroy</a></td>
 ```
 
-<span style="text-decoration: underline;">javascripts/backbone/templates/projects/index.jst.ejs</span>:
-``` html
+``` html javascripts/backbone/templates/projects/index.jst.ejs
 <h1>Listing projects</h1>
 
 <table id="projects-table">
@@ -207,8 +199,7 @@ To display our Project data we need three templates: index to list projects, pro
 <br/>
 ```
 
-<span style="text-decoration: underline;">javascripts/backbone/templates/projects/new.jst.ejs</span>:
-``` html
+``` html javascripts/backbone/templates/projects/new.jst.ejs
 <h1>New project</h1>
 
 <form id="new-project" name="project">
@@ -226,8 +217,7 @@ To display our Project data we need three templates: index to list projects, pro
 
 These should be fairly self-explanatory. Each template will also need a Backbone View as well.
 
-<span style="text-decoration: underline;">javascripts/backbone/views/projects/index_view.js.coffee</span>:
-``` coffeescript
+``` coffeescript javascripts/backbone/views/projects/index_view.js.coffee
 Trackbone.Views.Projects ||= {}
 
 class Trackbone.Views.Projects.IndexView extends Backbone.View
@@ -253,8 +243,7 @@ class Trackbone.Views.Projects.IndexView extends Backbone.View
 
 This view receives the entire list of projects, renders the index view and appends a project view for each project.
 
-<span style="text-decoration: underline;">javascripts/backbone/views/projects/new_view.js.coffee</span>:
-``` coffeescript
+``` coffeescript javascripts/backbone/views/projects/new_view.js.coffee
 Trackbone.Views.Projects ||= {}
 
 class Trackbone.Views.Projects.NewView extends Backbone.View
@@ -280,8 +269,7 @@ class Trackbone.Views.Projects.NewView extends Backbone.View
 
 The new view simply providers a handler for creating a new project within the collection. The create method actually does three things: creates the model, POSTs the model to the server, and adds the model to the collection.
 
-<span style="text-decoration: underline;">javascripts/backbone/views/projects/project_view.js.coffee</span>:
-``` coffeescript
+``` coffeescript javascripts/backbone/views/projects/project_view.js.coffee
 Trackbone.Views.Projects ||= {}
 
 class Trackbone.Views.Projects.ProjectView extends Backbone.View
