@@ -1,11 +1,10 @@
 ---
 layout: post
 title: Using Sinon Spys with Meteor Collections
-tags:
+categories:
 - JavaScript
 - Meteor
 - Mocha
-- Programming
 - Sinon
 - Testing
 status: publish

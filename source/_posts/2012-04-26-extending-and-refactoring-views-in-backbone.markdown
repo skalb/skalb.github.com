@@ -1,15 +1,10 @@
 ---
 layout: post
 title: Extending and refactoring views in Backbone.js
-tags:
+categories:
 - Backbone
 - CoffeeScript
-- EJS
-- Handlebars
-- JavaScript
-- Programming
 - Rails
-- Ruby
 status: publish
 type: post
 published: true

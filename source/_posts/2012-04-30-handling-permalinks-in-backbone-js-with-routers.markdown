@@ -1,14 +1,10 @@
 ---
 layout: post
 title: Handling permalinks in Backbone.js with Routers
-tags:
+categories:
 - Backbone
 - CoffeeScript
-- EJS
-- JavaScript
-- Programming
 - Rails
-- Ruby
 status: publish
 type: post
 published: true

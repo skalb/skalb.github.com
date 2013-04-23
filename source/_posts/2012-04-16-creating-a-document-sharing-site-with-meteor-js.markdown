@@ -1,13 +1,10 @@
 ---
 layout: post
 title: Creating a document sharing site with Meteor.js
-tags:
+categories:
 - Backbone
 - CoffeeScript
-- Handlebars
-- JavaScript
 - Meteor
-- Programming
 status: publish
 type: post
 published: true

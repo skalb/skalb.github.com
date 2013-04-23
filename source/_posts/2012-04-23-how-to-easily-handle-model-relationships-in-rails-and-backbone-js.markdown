@@ -1,12 +1,9 @@
 ---
 layout: post
 title: How to (easily) handle model relationships in Rails and Backbone.js
-tags:
+categories:
 - Backbone
 - CoffeeScript
-- EJS
-- JavaScript
-- Programming
 - Rails
 - Ruby
 status: publish

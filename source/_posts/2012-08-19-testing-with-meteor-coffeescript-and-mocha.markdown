@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Testing with Meteor, CoffeeScript and Mocha
-tags:
+categories:
 - CoffeeScript
 - JavaScript
 - Meteor

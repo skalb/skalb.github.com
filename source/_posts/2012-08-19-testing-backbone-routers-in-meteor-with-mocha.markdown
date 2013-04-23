@@ -1,12 +1,11 @@
 ---
 layout: post
 title: Testing Backbone Routers in Meteor with Mocha
-tags:
+categories:
 - Backbone
 - CoffeeScript
 - Meteor
 - Mocha
-- Programming
 - Testing
 status: publish
 type: post

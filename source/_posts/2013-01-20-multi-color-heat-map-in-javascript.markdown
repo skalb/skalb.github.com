@@ -1,10 +1,9 @@
 ---
 layout: post
 title: Multi-color heat map in JavaScript
-tags:
-- Data
+categories:
+- Visualizations
 - JavaScript
-- Programming
 status: publish
 type: post
 published: true

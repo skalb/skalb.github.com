@@ -1,10 +1,9 @@
 ---
 layout: post
 title: ! 'Book Review: Technical Blogging'
-tags:
+categories:
 - Blogging
 - Books
-- Reviews
 status: publish
 type: post
 published: true
