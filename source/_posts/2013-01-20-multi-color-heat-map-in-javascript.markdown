@@ -65,4 +65,4 @@ $(document).ready(function(){
 </script>
 ```
 
-Here's a working <a href="http://www.skalb.com/wp-content/uploads/jquery-data-heat-map.htm">example</a>.
+Here's a working <a href="http://www.skalb.com/assets/jquery-data-heat-map.html">example</a>.
