@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Simpleshop: simple browser based photo editing"
+title: "Simpleshop: pure JavaScript photo editing"
 date: 2013-07-04 17:00
 comments: true
 categories:
