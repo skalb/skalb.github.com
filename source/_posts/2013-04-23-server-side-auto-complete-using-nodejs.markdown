@@ -3,9 +3,10 @@ layout: post
 title: "Server side airport autocomplete using NodeJS"
 date: 2013-04-23 15:47
 comments: true
-categories: 
-- JavaScript 
+categories:
+- JavaScript
 - NodeJS
+- Express
 status: publish
 type: post
 published: true
@@ -95,7 +96,7 @@ fs.readFile('data/airport-codes.dat', function(err, data) {
 });
 ```
 
-In the nodeJS route that returns the airport data, we'll use the input to test if it matched either an airport name or an aiport code and return those results. 
+In the nodeJS route that returns the airport data, we'll use the input to test if it matched either an airport name or an aiport code and return those results.
 
 ``` javascript routes/index.js
 exports.airports = function(req, res) {
