@@ -95,3 +95,13 @@ google_analytics_tracking_id: UA-19284849-1
 facebook_like: true
 
 coderwall_user: skalb
+
+linkedin_user: sameer-kalburgi/b/10a/550
+
+navigation:
+- text: skalb.com
+  url: /
+- text: Archives
+  url: /blog/archives
+- text: Source
+  url: https://github.com/skalb/skalb.github.com/tree/source
