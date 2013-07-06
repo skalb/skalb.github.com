@@ -100,8 +100,8 @@ linkedin_user: sameer-kalburgi/b/10a/550
 
 navigation:
 - text: skalb.com
-  url: /
+  url: http://www.skalb.com
 - text: Archives
-  url: /blog/archives
+  url: http://www.skalb.com/blog/archives
 - text: Source
   url: https://github.com/skalb/skalb.github.com/tree/source
