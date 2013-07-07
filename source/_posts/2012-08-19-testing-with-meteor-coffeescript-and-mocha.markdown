@@ -25,20 +25,20 @@ meta:
   _twittercount-cache: '0'
   robotsmeta: index,follow
 ---
-Despite no mention in the official <a href="http://docs.meteor.com/">Meteor docs</a>, adding unit tests is fairly easy. For some reason, they don't mention this but any files in the tests/ folder will be ignored by the Meteor server.
+Despite no mention in the official [Meteor docs](http://docs.meteor.com/), adding unit tests is fairly easy. For some reason, they don't mention this but any files in the tests/ folder will be ignored by the Meteor server.
 
 <!--more-->
 
 What you'll need:
 <ul>
-	<li><a href="https://github.com/meteor/meteor">Meteor</a></li>
-	<li><a href="https://github.com/isaacs/npm">Npm</a></li>
-	<li><a href="https://github.com/visionmedia/mocha">Mocha</a></li>
+	<li>[Meteor](https://github.com/meteor/meteor)</li>
+	<li>[Npm](https://github.com/isaacs/npm)</li>
+	<li>[Mocha](https://github.com/visionmedia/mocha)</li>
 </ul>
 <div>Optional:</div>
 <div>
 <ul>
-	<li><a href="http://growl.info/">Growl</a> (for notifications from mocha watch)</li>
+	<li>[Growl](http://growl.info/) (for notifications from mocha watch)</li>
 </ul>
 </div>
 <div>Getting everything running:</div>
@@ -69,11 +69,11 @@ describe "Array", ->
 
 Mocha should notice the file change and run the tests showing you the passing test.
 
-<a href="https://github.com/skalb/meteor-examples/tree/master/mocha">Source code here.</a>
+[Source code here.](https://github.com/skalb/meteor-examples/tree/master/mocha)
 
 Some notes:
 <ul>
 	<li>The growl notification didn't work for me, but I assume that's because I'm using an old version.</li>
 	<li>When using Mocha watch, sometimes a failing test result would be outputted many times</li>
-	<li><a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</li>
+	<li>[Jasmine](https://github.com/pivotal/jasmine) should also work fine</li>
 </ul>

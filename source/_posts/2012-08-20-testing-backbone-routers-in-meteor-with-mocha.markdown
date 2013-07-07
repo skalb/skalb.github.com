@@ -28,7 +28,7 @@ One of the downsides of Meteor and perhaps strongest complaint is that it doesn'
 
 <!--more-->
 
-<em>Here's a previous <a title="Testing with Meteor, CoffeeScript and Mocha" href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/">post</a> describing how to setup everything</em>
+<em>Here's a previous [post](http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/) describing how to setup everything</em>
 
 Creating the project:
 
@@ -88,7 +88,7 @@ class SampleRouterFactory
 root.SampleRouterFactory = SampleRouterFactory
 ```
 
-Exports is a global object accessible in the nodeJS environment that Mocha runs in. See this <a href="http://visionmedia.github.com/masteringnode/book.html">ebook</a> for more details.
+Exports is a global object accessible in the nodeJS environment that Mocha runs in. See this [ebook](http://visionmedia.github.com/masteringnode/book.html) for more details.
 
 This module will now create a class that will return a new instance of the SampleRouter.
 
@@ -111,11 +111,11 @@ Lastly, in the actual Meteor app I create the app a similar way:
 
 mocha-router.coffee
 ``` coffeescript
-Meteor.startup -> 
+Meteor.startup ->
   factory = new SampleRouterFactory(Backbone)
   router = factory.getRouter(Backbone)
 ```
 
 Again, there's no need to require either Backbone (loaded as a SmartPackage) or the actual SampleRouterFactory because Meteor treats all of your CoffeeScript files as a single file and consequently scope.
 
-<a href="https://github.com/skalb/meteor-examples/tree/master/mocha-router">Source code here.</a>
+[Source code here.](https://github.com/skalb/meteor-examples/tree/master/mocha-router)

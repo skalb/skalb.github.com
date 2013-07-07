@@ -1,4 +1,4 @@
-.highlight, html .gist .gist-file .gist-syntax .gist-highlight {
+.highlight, html .gist .gist-file .gist-syntax .gist-highlight, .sans {
   table td.code { width: 100%; }
   -moz-border-radius: 9px;
   border-radius: 9px;
@@ -203,7 +203,7 @@ pre, .highlight, .gist-highlight {
   &::-webkit-scrollbar-thumb:horizontal { background: $solar-scroll-thumb;  -webkit-border-radius: 4px; border-radius: 4px }
 }
 
-.highlight code { 
+.highlight code {
   @extend .pre-code; background: #000;
 }
 figure.code {

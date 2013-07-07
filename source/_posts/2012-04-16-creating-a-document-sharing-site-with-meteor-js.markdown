@@ -25,15 +25,15 @@ meta:
 **Background:**
 
 “Meteor is a set of new technologies for building top-quality web apps in a fraction of the time, whether you're an expert developer or just getting started.”
-- <a href="http://www.meteor.com">Meteor.com</a>
+- [Meteor.com](http://www.meteor.com)
 
 **Goal:**
 
-Create and deploy a real time document sharing website. The final product is at: <a href="http://docshare-tutorial.meteor.com">docshare-tutorial.meteor.com</a>.
+Create and deploy a real time document sharing website. The final product is at: [docshare-tutorial.meteor.com](http://docshare-tutorial.meteor.com).
 
 <!--more-->
 
-**Updated: Source code at <a href="https://github.com/skalb/docshare-tutorial">https://github.com/skalb/docshare-tutorial</a>**
+**Updated: Source code at [https://github.com/skalb/docshare-tutorial](https://github.com/skalb/docshare-tutorial)**
 
 **Spec:**
 
@@ -67,7 +67,7 @@ cd docshare-tutorial
 meteor
 ```
 
-You should see the default site at <a href="http://localhost:3000/">http://localhost:3000</a>:
+You should see the default site at [http://localhost:3000](http://localhost:3000/):
 
 Lastly, add the other packages we are going to use
 
@@ -201,7 +201,7 @@ Meteor.startup ->
   Backbone.history.start pushState: true
 ```
 
-Basically this will store the document_id into the Meteor session whenever the user navigates to a URL or form /:document_id. If you’re not familar with Backbone, don’t worry about this, or read up at <a href="http://backbonejs.org/">http://backbonejs.org/</a>
+Basically this will store the document_id into the Meteor session whenever the user navigates to a URL or form /:document_id. If you’re not familar with Backbone, don’t worry about this, or read up at [http://backbonejs.org/](http://backbonejs.org/)
 
 We are also using Meteor.startup again here but for a different purpose. On the client side it will run after DOM is loaded every time. I think it would be more clear if this method didn’t mean different things based on context.
 

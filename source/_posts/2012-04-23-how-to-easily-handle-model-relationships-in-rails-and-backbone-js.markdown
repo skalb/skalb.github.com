@@ -24,9 +24,9 @@ meta:
   _facebookcount-cache: '0'
   _twittercount-cache: '1'
 ---
-While playing around with Backbone.js, I couldn't find an easy way to build an app that used the RESTful hierarchy of my models. I think <a href="http://spinejs.com/docs/relations">Spine's</a> implementation is fairly straightforward.
+While playing around with Backbone.js, I couldn't find an easy way to build an app that used the RESTful hierarchy of my models. I think [Spine's](http://spinejs.com/docs/relations) implementation is fairly straightforward.
 
-I did find a relevant<a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn't seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.
+I did find a relevant [active project](https://github.com/PaulUithol/Backbone-relational), but for my specific case the added complexity of an additional component and dependency didn't seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.
 
 I wanted to learn more about Backbone, so I prototyped a very basic project management app using Rails and Backbone called Trackbone that I'll walk through in this post.
 
@@ -39,12 +39,12 @@ Briefly, this is a single page three panel app with drill-downs:
 	<li>Featurehas many Bugs</li>
 </ul>
 
-<a href="http://young-flower-9677.herokuapp.com/">Demo on Heroku</a>
-<a href="https://github.com/skalb/trackbone/tree/version1">Source</a> 
+[Demo on Heroku](http://young-flower-9677.herokuapp.com/)
+[Source](https://github.com/skalb/trackbone/tree/version1)
 
 **Rails backend:**
 
-Rails controllers provide the REST API for our Backbone app. I haven't inlined them here since they only have a few modifications post-scaffolding, but you can view them <a href="https://github.com/skalb/trackbone/tree/version1/app/controllers">here</a>
+Rails controllers provide the REST API for our Backbone app. I haven't inlined them here since they only have a few modifications post-scaffolding, but you can view them [here](https://github.com/skalb/trackbone/tree/version1/app/controllers)
 
 Modifications:
 <ul>
@@ -65,7 +65,7 @@ Trackbone::Application.routes.draw do
 end
 ```
 
-For setting up Backbone, the rails-backbone gem provides a good <a href="https://github.com/codebrew/backbone-rails/blob/master/README.md">guide</a>. 
+For setting up Backbone, the rails-backbone gem provides a good [guide](https://github.com/codebrew/backbone-rails/blob/master/README.md).
 
 Originally, I scaffolded Backbone here as well. On review, I'm not sure I would do that again. I think you'll end at a better design if you start from scratch.
 
@@ -180,7 +180,7 @@ To display our Project data we need three templates: index to list projects, pro
 
 ``` html javascripts/backbone/templates/shared/item.jst.ejs
 <td><a href="#" class="select"><%= name %></td>
-<td><a href="#" class="destroy">Destroy</a></td>
+<td>[Destroy](#" class="destroy)</td>
 ```
 
 ``` html javascripts/backbone/templates/projects/index.jst.ejs
@@ -279,7 +279,7 @@ class Trackbone.Views.Projects.ProjectView extends Backbone.View
   tagName: "tr"
   className: "item"
 
-  select: () -> 
+  select: () ->
     window.toggleSelected(@el)
     @model.loadFeatures()
     do (@model) ->
@@ -306,10 +306,10 @@ class Trackbone.Views.Projects.ProjectView extends Backbone.View
     return this
 ```
 
-This view is really the heart of the app. Every time a Project is selected, we'll display the Features for that Project by calling fetch() and binding to success(). 
+This view is really the heart of the app. Every time a Project is selected, we'll display the Features for that Project by calling fetch() and binding to success().
 
-I'm not going to inline the templates and views for Features and Bugs since they are more or less identical, but feel free to browse through all the <a href="https://github.com/skalb/trackbone/tree/version1/app/assets/javascripts/backbone">client side code</a>
+I'm not going to inline the templates and views for Features and Bugs since they are more or less identical, but feel free to browse through all the [client side code](https://github.com/skalb/trackbone/tree/version1/app/assets/javascripts/backbone)
 
-Again, here's a working <a href="http://young-flower-9677.herokuapp.com/">demo</a>.
+Again, here's a working [demo](http://young-flower-9677.herokuapp.com/).
 
 Please provide any feedback you have in the comments. Was this useful? Too long? Too much/too little code inline? I'm currently working on a couple more entires that will build on this one as I'm learning more about Backbone.js, so feedback is definitely useful.

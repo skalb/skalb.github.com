@@ -20,9 +20,9 @@ meta:
   _twittercount-cache: '0'
   _wpas_done_all: '1'
 ---
-While working on my <a href="http://flightgrid.herokuapp.com/">flight grid site</a>, I was looking for a way to add a multi-color heat map.
+While working on my [flight grid site](http://flightgrid.herokuapp.com/), I was looking for a way to add a multi-color heat map.
 
-I found the following <a href="http://www.designchemical.com/blog/index.php/jquery/jquery-tutorial-create-a-flexible-data-heat-map/">example</a>, but for just one color.
+I found the following [example](http://www.designchemical.com/blog/index.php/jquery/jquery-tutorial-create-a-flexible-data-heat-map/), but for just one color.
 
 I modified it to work for two colors as shown below (warning messy code!):
 
@@ -40,11 +40,11 @@ $(document).ready(function(){
     var counts= $('#heat-map-3 tbody td').not('.stats-title').map(function() {
         return parseInt($(this).text());
     }).get();
-	
+
 	// return max value
 	var max = Array.max(counts),
       middle = max * 1.0 / 2;
-	
+
 	// add classes to cells based on nearest 10 value
 	$('#heat-map-3 tbody td').not('.stats-title').each(function(){
 		var val = parseInt($(this).text());
@@ -65,4 +65,4 @@ $(document).ready(function(){
 </script>
 ```
 
-Here's a working <a href="http://www.skalb.com/assets/jquery-data-heat-map.html">example</a>.
+Here's a working [example](http://www.skalb.com/assets/jquery-data-heat-map.html).

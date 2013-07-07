@@ -22,7 +22,7 @@ meta:
   _twittercount-cache: '2'
   _syntaxhighlighter_encoded: '1'
 ---
-In a <a href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/" >previous post</a>, I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn't share any code. I think part of this was that I originally scaffolded the entire app and worked backwards.
+In a [previous post](http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/), I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn't share any code. I think part of this was that I originally scaffolded the entire app and worked backwards.
 
 <!--more-->
 
@@ -148,7 +148,7 @@ class Trackbone.Views.Projects.IndexView extends Trackbone.Views.IndexView
     new Trackbone.Views.Projects.ProjectView(options)
 ```
 
-We can call the into the parent class by using super in this view's initialize. This is just a <a href="http://coffeescript.org/#classes">CoffeeScript shortcut</a> to apply the same arguments to the parent's constructor. I've also explicitly required the parent View class since Rails does not guarantee which order JavaScript files will be loaded in the browser. The getView function here creates the correct ItemView based off the Project model.
+We can call the into the parent class by using super in this view's initialize. This is just a [CoffeeScript shortcut](http://coffeescript.org/#classes) to apply the same arguments to the parent's constructor. I've also explicitly required the parent View class since Rails does not guarantee which order JavaScript files will be loaded in the browser. The getView function here creates the correct ItemView based off the Project model.
 
 The New item View shown below is generic enough that it did not need to be extended for each model.
 
@@ -193,7 +193,7 @@ class Trackbone.Collections.ProjectsCollection extends Backbone.Collection
   url: '/projects'
 ```
 
-One thing to point out in the Item View base class is that I believe I could have used the <a href="http://coffeescript.org/#fat_arrow">fat arrow</a> to retain the correct context.
+One thing to point out in the Item View base class is that I believe I could have used the [fat arrow](http://coffeescript.org/#fat_arrow) to retain the correct context.
 
 ``` coffeescript
 Trackbone.Views.Projects ||= {}
@@ -208,7 +208,7 @@ class Trackbone.Views.ItemView extends Backbone.View
   tagName: "tr"
   className: "item"
 
-  select: () -> 
+  select: () ->
     if @model.loadChildren
       window.toggleSelected(@el)
       @model.loadChildren()
@@ -239,7 +239,7 @@ Trackbone.Views.Projects ||= {}
 class Trackbone.Views.Projects.ProjectView extends Trackbone.Views.ItemView
   template: JST["backbone/templates/item"]
 
-  renderChildren: (children) -> 
+  renderChildren: (children) ->
     featuresView = new Trackbone.Views.Features.IndexView(items: children)
     $("#list-features").html(featuresView.render().el)
 
@@ -251,6 +251,6 @@ class Trackbone.Views.Projects.ProjectView extends Trackbone.Views.ItemView
     $("#new-bugs").html('')
 ```
 
-Again, here's the <a href="http://young-flower-9677.herokuapp.com/">demo</a> and <a href="https://github.com/skalb/trackbone/tree/version2">source</a>.
+Again, here's the [source](http://young-flower-9677.herokuapp.com/">demo</a> and <a href="https://github.com/skalb/trackbone/tree/version2).
 
 I think this is a big improvement over the first version, though it's not quite as good as it could be. Having the loadChildren logic in the views doesn't really make sense, but I'm leaving those changes for when I implement permalinks.

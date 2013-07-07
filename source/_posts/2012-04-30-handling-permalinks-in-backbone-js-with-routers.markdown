@@ -24,12 +24,12 @@ meta:
 ---
 This post is part of a series:
 <ul>
-	<li><a title="How to (easily) handle model relationships in Rails and Backbone.js" href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/">First post</a></li>
-	<li><a title="Extending and refactoring views in Backbone.js" href="http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/">Second post</a></li>
+	<li>[First post](http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/)</li>
+	<li>[Second post](http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/)</li>
 </ul>
 One of the missing features in my prototype was handling of permalinks. To make things easy, I originally removed all the routes and added click handlers instead. In retrospect that was a mistake. Instead of having the app logic tangled up with click handlers, it would have been much more straightforward to define routes and use links.
 
-Here’s the <a href="https://github.com/skalb/trackbone">source</a> and <a href="http://young-flower-9677.herokuapp.com/">demo</a>.
+Here’s the [demo](https://github.com/skalb/trackbone">source</a> and <a href="http://young-flower-9677.herokuapp.com/).
 
 <!--more-->
 
@@ -180,4 +180,4 @@ class Trackbone.Views.ItemView extends Backbone.View
 
 ```
 
-Again, here’s the <a href="https://github.com/skalb/trackbone">source</a> and <a href="http://young-flower-9677.herokuapp.com/">demo</a>.
+Again, here’s the [demo](https://github.com/skalb/trackbone">source</a> and <a href="http://young-flower-9677.herokuapp.com/).

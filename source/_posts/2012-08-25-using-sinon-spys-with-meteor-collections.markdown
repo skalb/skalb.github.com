@@ -20,7 +20,7 @@ meta:
   _facebookcount-cache: '0'
   _twittercount-cache: '0'
 ---
-Following my testing described <a title="Testing Backbone Routers in Meteor with Mocha" href="http://www.skalb.com/2012/08/19/testing-backbone-routers-in-meteor-with-mocha/">here</a>, I wanted to verify that Meteor interacts with my Routers correctly.
+Following my testing described [here](http://www.skalb.com/2012/08/19/testing-backbone-routers-in-meteor-with-mocha/), I wanted to verify that Meteor interacts with my Routers correctly.
 
 <!--more-->
 
@@ -102,4 +102,4 @@ describe "SampleRouter", ->
     items.find.called.should.equal true
 ```
 
-A bit roundabout, but in the end what I was trying to accomplish. Source <a href="https://github.com/skalb/meteor-examples/tree/master/mocha-router">here</a>.
+A bit roundabout, but in the end what I was trying to accomplish. Source [here](https://github.com/skalb/meteor-examples/tree/master/mocha-router).
