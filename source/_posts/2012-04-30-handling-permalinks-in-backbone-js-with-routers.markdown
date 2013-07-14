@@ -9,38 +9,26 @@ status: publish
 type: post
 published: true
 comments: true
-meta:
-  _edit_last: '1'
-  _avia_elements_avia_options_sentence: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
-  _avia_elements_theme_compatibility_mode: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
-  keywords: ! 'Backbone, Backbone.js, JavaScript, Coffeescript, Ruby, EJS, Rails,
-    Models, Views, Templates, Single page, '
-  title: Handling permalinks in Backbone.js with Routers
-  description: Handling permalinks in Backbone.js with Routers
-  _syntaxhighlighter_encoded: '1'
-  _facebookcount-cache: '0'
-  _twittercount-cache: '1'
-  robotsmeta: index,follow
 ---
 This post is part of a series:
-<ul>
-	<li>[First post](http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/)</li>
-	<li>[Second post](http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/)</li>
-</ul>
+
+- [First post](http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/)</li>
+- [Second post](http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/)</li>
+
 One of the missing features in my prototype was handling of permalinks. To make things easy, I originally removed all the routes and added click handlers instead. In retrospect that was a mistake. Instead of having the app logic tangled up with click handlers, it would have been much more straightforward to define routes and use links.
 
-Here’s the [demo](https://github.com/skalb/trackbone">source</a> and <a href="http://young-flower-9677.herokuapp.com/).
+Here’s the [demo](http://young-flower-9677.herokuapp.com/) and [source](https://github.com/skalb/trackbone)
 
 <!--more-->
 
 In this post, I’m going to explain the  Backbone router step by step. First, I need to actually define what routes I want:
 
 I need:
-<ul>
-	<li>Home page -> Load list of projects</li>
-	<li>Selected project -> Load list of projects and features</li>
-	<li>Selected feature -> Load list of projects, features, and bugs</li>
-</ul>
+
+- Home page -> Load list of projects</li>
+- Selected project -> Load list of projects and features</li>
+- Selected feature -> Load list of projects, features, and bugs</li>
+
 ``` coffeescript
 routes:
   ".*"  : "showProjects"
@@ -180,4 +168,4 @@ class Trackbone.Views.ItemView extends Backbone.View
 
 ```
 
-Again, here’s the [demo](https://github.com/skalb/trackbone">source</a> and <a href="http://young-flower-9677.herokuapp.com/).
+Again, here’s the [demo](http://young-flower-9677.herokuapp.com/) and [source](https://github.com/skalb/trackbone)
