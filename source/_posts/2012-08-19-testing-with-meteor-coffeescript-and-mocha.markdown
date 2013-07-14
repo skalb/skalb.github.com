@@ -12,36 +12,20 @@ status: publish
 type: post
 published: true
 comments: true
-meta:
-  _edit_last: '1'
-  _syntaxhighlighter_encoded: '1'
-  title: Testing with Meteor, CoffeeScript and Mocha
-  description: Testing with Meteor, CoffeeScript and Mocha
-  keywords: meteor, meteor js, mocha, javascript, jasmine, testing, unit testing,
-    bdd, tdd, coffeescript
-  _avia_elements_avia_options_sentence: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
-  _avia_elements_theme_compatibility_mode: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
-  _facebookcount-cache: '0'
-  _twittercount-cache: '0'
-  robotsmeta: index,follow
 ---
 Despite no mention in the official [Meteor docs](http://docs.meteor.com/), adding unit tests is fairly easy. For some reason, they don't mention this but any files in the tests/ folder will be ignored by the Meteor server.
 
 <!--more-->
 
 What you'll need:
-<ul>
-	<li>[Meteor](https://github.com/meteor/meteor)</li>
-	<li>[Npm](https://github.com/isaacs/npm)</li>
-	<li>[Mocha](https://github.com/visionmedia/mocha)</li>
-</ul>
-<div>Optional:</div>
-<div>
-<ul>
-	<li>[Growl](http://growl.info/) (for notifications from mocha watch)</li>
-</ul>
-</div>
-<div>Getting everything running:</div>
+
+- [Meteor](https://github.com/meteor/meteor)
+- [Npm](https://github.com/isaacs/npm)
+- [Mocha](https://github.com/visionmedia/mocha)
+
+Optional: [Growl](http://growl.info/) (for notifications from mocha watch)
+
+Getting everything running:
 
 ``` bash
 meteor create mocha
@@ -72,8 +56,7 @@ Mocha should notice the file change and run the tests showing you the passing te
 [Source code here.](https://github.com/skalb/meteor-examples/tree/master/mocha)
 
 Some notes:
-<ul>
-	<li>The growl notification didn't work for me, but I assume that's because I'm using an old version.</li>
-	<li>When using Mocha watch, sometimes a failing test result would be outputted many times</li>
-	<li>[Jasmine](https://github.com/pivotal/jasmine) should also work fine</li>
-</ul>
+- The growl notification didn't work for me, but I assume that's because I'm using an old version.
+- When using Mocha watch, sometimes a failing test result would be outputted many times
+- [Jasmine](https://github.com/pivotal/jasmine) should also work fine
+
