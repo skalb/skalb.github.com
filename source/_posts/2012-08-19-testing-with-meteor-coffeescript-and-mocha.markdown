@@ -13,7 +13,7 @@ type: post
 published: true
 comments: true
 ---
-Despite no mention in the official [Meteor docs](http://docs.meteor.com/), adding unit tests is fairly easy. For some reason, they don't mention this but any files in the tests/ folder will be ignored by the Meteor server.
+Adding unit tests is straightforward in [Meteor](http://docs.meteor.com/#structuringyourapp). Any files in the tests/ folder will be ignored by the Meteor server.
 
 <!--more-->
 
