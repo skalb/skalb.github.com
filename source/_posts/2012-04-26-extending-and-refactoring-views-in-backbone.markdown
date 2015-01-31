@@ -9,24 +9,14 @@ status: publish
 type: post
 published: true
 comments: true
-meta:
-  _edit_last: '1'
-  description: Tutorial on how to extend views in Backbone.js
-  title: Extending and refactoring views in Backbone
-  robotsmeta: index,follow
-  _avia_elements_avia_options_sentence: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
-  _avia_elements_theme_compatibility_mode: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
-  keywords: Web, Tutorial, HTML, JavaScript, Templates, Backbone, CoffeeScript, Handlebars,
-    Rails, Ruby
-  _facebookcount-cache: '0'
-  _twittercount-cache: '2'
-  _syntaxhighlighter_encoded: '1'
 ---
+
 In a [previous post](http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/), I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn't share any code. I think part of this was that I originally scaffolded the entire app and worked backwards.
 
 <!--more-->
 
 For example, here's Project vs Feature Index Templates:
+
 ``` html
 <h1>Listing projects</h1>
 
@@ -56,6 +46,7 @@ vs.
 ```
 
 This is easily refactored to:
+
 ``` html
 <h1>Listing <%= type %></h1>
 
@@ -70,6 +61,7 @@ This is easily refactored to:
 
 ```
 Similarly, the New View changed from:
+
 ``` html
 <h1>New project</h1>
 
@@ -85,7 +77,9 @@ Similarly, the New View changed from:
 
 </form>
 ```
+
 to
+
 ``` html
 <h1>New <%= type %></h1>
 

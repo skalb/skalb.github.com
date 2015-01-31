@@ -11,19 +11,8 @@ status: publish
 type: post
 published: true
 comments: true
-meta:
-  _edit_last: '1'
-  _syntaxhighlighter_encoded: '1'
-  description: Testing Backbone Routers in Meteor with Mocha
-  keywords: meteor, meteor js, mocha, javascript, testing, unit testing, bdd, tdd,
-    coffeescript, routers, backbone
-  _avia_elements_avia_options_sentence: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
-  _avia_elements_theme_compatibility_mode: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
-  _facebookcount-cache: '0'
-  _twittercount-cache: '2'
-  title: Testing Backbone Routers in Meteor with Mocha
-  robotsmeta: index,follow
 ---
+
 One of the downsides of Meteor and perhaps strongest complaint is that it doesn't play nicely with existing NodeJS modules. You're forced to use the available SmartPackages (or build one). This is a problem since the Mocha environment runs without the browser and doesn't have access to the libraries included by the SmartPackage.
 
 <!--more-->

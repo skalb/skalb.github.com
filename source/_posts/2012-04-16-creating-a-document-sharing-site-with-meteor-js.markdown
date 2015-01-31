@@ -9,19 +9,8 @@ status: publish
 type: post
 published: true
 comments: true
-meta:
-  _edit_last: '1'
-  _syntaxhighlighter_encoded: '1'
-  title: Creating a document sharing site with Meteor.js
-  description: Create and deploy a real time document sharing website using Meteor.js
-    and Backbone.js
-  _twittercount-cache: '27'
-  _facebookcount-cache: '4'
-  keywords: Backbone.js,CoffeeScript,Handlebars,JavaScript,Meteor.js
-  _avia_elements_avia_options_sentence: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
-  _avia_elements_theme_compatibility_mode: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
-  robotsmeta: index,follow
 ---
+
 **Background:**
 
 “Meteor is a set of new technologies for building top-quality web apps in a fraction of the time, whether you're an expert developer or just getting started.”

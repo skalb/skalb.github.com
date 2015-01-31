@@ -8,18 +8,8 @@ status: publish
 type: post
 published: true
 comments: true
-meta:
-  _avia_elements_theme_compatibility_mode: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
-  title: Multi-color heat map in JavaScript
-  keywords: JavaScript, Data, heat map
-  _avia_elements_avia_options_sentence: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
-  robotsmeta: index,follow
-  _edit_last: '1'
-  _syntaxhighlighter_encoded: '1'
-  _facebookcount-cache: '0'
-  _twittercount-cache: '0'
-  _wpas_done_all: '1'
 ---
+
 While working on my [flight grid site](http://flightgrid.herokuapp.com/), I was looking for a way to add a multi-color heat map.
 
 I found the following [example](http://www.designchemical.com/blog/index.php/jquery/jquery-tutorial-create-a-flexible-data-heat-map/), but for just one color.

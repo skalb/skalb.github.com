@@ -10,20 +10,8 @@ status: publish
 type: post
 published: true
 comments: true
-meta:
-  _edit_last: '1'
-  _syntaxhighlighter_encoded: '1'
-  keywords: ! 'Backbone, Backbone.js, JavaScript, Coffeescript, Ruby, EJS, Rails,
-    Models, Views, Templates, Single page, '
-  description: Tutorial building a very basic single page project management app using
-    Rails and Backbone.
-  title: How to (easily) handle model relationships in Rails and Backbone.js
-  robotsmeta: index,follow
-  _avia_elements_avia_options_sentence: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
-  _avia_elements_theme_compatibility_mode: a:3:{s:15:"_slideshow_type";s:11:"fade_slider";s:19:"_slideshow_autoplay";s:5:"false";s:19:"_slideshow_duration";s:1:"5";}
-  _facebookcount-cache: '0'
-  _twittercount-cache: '1'
 ---
+
 While playing around with Backbone.js, I couldn't find an easy way to build an app that used the RESTful hierarchy of my models. I think [Spine's](http://spinejs.com/docs/relations) implementation is fairly straightforward.
 
 I did find a relevant [active project](https://github.com/PaulUithol/Backbone-relational), but for my specific case the added complexity of an additional component and dependency didn't seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.

@@ -10,6 +10,7 @@ type: post
 published: true
 comments: true
 ---
+
 This post is part of a series:
 
 - [First post](http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/)</li>
