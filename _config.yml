@@ -7,7 +7,6 @@ title: skalb.com
 subtitle: By Sameer Kalburgi.
 author: Sameer Kalburgi
 simple_search: http://google.com/search
-description:
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -39,12 +38,18 @@ rdiscount:
     - autolink
     - footnotes
     - smart
-pygments: false # default python pygments have been replaced by pygments.rb
+highlighter: pygments # default python pygments have been replaced by pygments.rb
 
+<<<<<<< HEAD
 paginate: 5          # Posts per page on the blog index
 pagination_dir: blog  # Directory base for pagination URLs eg. /blog/page/2/
+=======
+paginate: 10          # Posts per page on the blog index
+paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
+>>>>>>> 5080107cb9e4c7bad8feb719f7e57c1da3b20c65
 recent_posts: 5       # Posts in the sidebar Recent Posts section
 excerpt_link: "Read on &rarr;"  # "Continue reading" link text at the bottom of excerpted articles
+excerpt_separator: "<!--more-->"
 
 titlecase: true       # Converts page and post titles to titlecase
 
