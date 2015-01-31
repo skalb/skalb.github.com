@@ -166,12 +166,12 @@ There is a container, new, and list div for each model. Backbone will load data 
 
 To display our Project data we need three templates: index to list projects, project for a specific item, and new to create a project.
 
-``` html javascripts/backbone/templates/shared/item.jst.ejs
+{% codeblock %}
 <td><a href="#" class="select"><%= name %></td>
 <td>[Destroy](#" class="destroy)</td>
-```
+{% endcodeblock %}
 
-``` html javascripts/backbone/templates/projects/index.jst.ejs
+{% codeblock %}
 <h1>Listing projects</h1>
 
 <table id="projects-table">
@@ -182,9 +182,9 @@ To display our Project data we need three templates: index to list projects, pro
 </table>
 
 <br/>
-```
+{% endcodeblock %}
 
-``` html javascripts/backbone/templates/projects/new.jst.ejs
+{% codeblock %}
 <h1>New project</h1>
 
 <form id="new-project" name="project">
@@ -198,7 +198,7 @@ To display our Project data we need three templates: index to list projects, pro
   </div>
 
 </form>
-```
+{% endcodeblock %}
 
 These should be fairly self-explanatory. Each template will also need a Backbone View as well.
 

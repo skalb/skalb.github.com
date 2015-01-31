@@ -17,7 +17,7 @@ In a [previous post](http://www.skalb.com/2012/04/23/how-to-easily-handle-model-
 
 For example, here's Project vs Feature Index Templates:
 
-``` html
+{% codeblock %}
 <h1>Listing projects</h1>
 
 <table id="projects-table">
@@ -26,13 +26,11 @@ For example, here's Project vs Feature Index Templates:
     <th></th>
   </tr>
 </table>
-
-<br/>
-```
+{% endcodeblock %}
 
 vs.
 
-``` html
+{% codeblock %}
 <h1>Listing features</h1>
 
 <table id="features-table">
@@ -41,13 +39,11 @@ vs.
     <th></th>
   </tr>
 </table>
-
-<br/>
-```
+{% endcodeblock %}
 
 This is easily refactored to:
 
-``` html
+{% codeblock %}
 <h1>Listing <%= type %></h1>
 
 <table id="items-table">
@@ -56,13 +52,11 @@ This is easily refactored to:
     <th></th>
   </tr>
 </table>
+{% endcodeblock %}
 
-<br/>
-
-```
 Similarly, the New View changed from:
 
-``` html
+{% codeblock %}
 <h1>New project</h1>
 
 <form id="new-project" name="project">
@@ -76,11 +70,11 @@ Similarly, the New View changed from:
   </div>
 
 </form>
-```
+{% endcodeblock %}
 
 to
 
-``` html
+{% codeblock %}
 <h1>New <%= type %></h1>
 
 <form id="new-item">
@@ -94,7 +88,7 @@ to
   </div>
 
 </form>
-```
+{% endcodeblock %}
 
 Great, that was easy and now I just reduced my total Templates. To share functionality between the Views I needed to create a base View class:
 
